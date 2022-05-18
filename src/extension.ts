@@ -1,10 +1,14 @@
 import * as vscode from 'vscode';
 
 const frameworks = {
-	'react': 'https://media.giphy.com/media/V6cO0KbJyZUQUSmHqA/giphy.gif',
-	'angular': 'https://media.giphy.com/media/l0MYymp9Y2kGiZYgU/giphy.gif',
-};
-
+	'reactPath': 'https://media.giphy.com/media/V6cO0KbJyZUQUSmHqA/giphy.gif',
+	'vuePath': 'https://media.giphy.com/media/l0MYymp9Y2kGiZYgU/giphy.gif',
+	'jsPath': 'https://media.giphy.com/media/l0MYymp9Y2kGiZYgU/giphy.gif',
+	'angularPath': 'https://media.giphy.com/media/l0MYymp9Y2kGiZYgU/giphy.gif',
+	'staticPath': 'https://media.giphy.com/media/l0MYymp9Y2kGiZYgU/giphy.gif',
+	'nodePath': 'https://media.giphy.com/media/l0MYymp9Y2kGiZYgU/giphy.gif'
+	};
+	
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('gist-happy.frameworks', () => {
@@ -136,16 +140,16 @@ class FrameworkPanel {
 		const webview = this._panel.webview;
 
 		// Vary the webview's content based on where it is located in the editor.
-		switch (this._panel.viewColumn) {
-			case vscode.ViewColumn.Two:
-				this._updateFramework(webview, 'angular');
-				return;
+		// switch (this._panel.viewColumn) {
+		// 	case vscode.ViewColumn.Two:
+		// 		this._updateFramework(webview, frameworks.reactPath);
+		// 		return;
 
-			case vscode.ViewColumn.One:
-			default:
-				this._updateFramework(webview, 'react');
-				return;
-		}
+		// 	case vscode.ViewColumn.One:
+		// 	default:
+		// 		this._updateFramework(webview, frameworks.angularPath);
+		// 		return;
+		// }
 	}
 
 	private _updateFramework(webview: vscode.Webview, framework: keyof typeof frameworks) {
@@ -171,6 +175,8 @@ class FrameworkPanel {
 
 		// Use a nonce to only allow specific scripts to be run
 		const nonce = getNonce();
+		
+		// Later we can add this in <script nonce="${nonce}" src="${scriptUri}"></script>
 
 		return `<!DOCTYPE html>
 			<html lang="en">
@@ -187,12 +193,26 @@ class FrameworkPanel {
 
 				<link href="${stylesResetUri}" rel="stylesheet">
 				<link href="${stylesMainUri}" rel="stylesheet">
-				<script nonce="${nonce}" src="${scriptUri}"></script>
 
 				<title>Frameworks</title>
 
 			</head>
 			<body>
+			<p>hello world</p>
+				<table>
+					<tr>
+						<td style="text-align: center;><img src="${frameworks.reactPath}" /></td>
+						<td style="text-align: center;><img src="${frameworks.vuePath}" /></td>
+						<td style="text-align: center;><img src="${frameworks.jsPath}" /></td>
+					</tr>
+					<tr>
+						<td style="text-align: center;><img src="${frameworks.angularPath}" /></td>
+						<td style="text-align: center;><img src="${frameworks.staticPath}" /></td>
+						<td style="text-align: center;><img src="${frameworks.nodePath}" /></td>
+				</tr>
+				</table>
+				<table>
+				
 			</body>
 			
 			</html>`;
